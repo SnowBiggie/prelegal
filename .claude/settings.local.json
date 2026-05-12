@@ -17,7 +17,18 @@
       "PowerShell(Get-Command *)",
       "Bash(npm install *)",
       "Bash(node -e \"const p=require\\('./package.json'\\); console.log\\(JSON.stringify\\(Object.keys\\(p.devDependencies\\)\\)\\)\")",
-      "Bash(npx jest *)"
+      "Bash(npx jest *)",
+      "mcp__atlassian__getAccessibleAtlassianResources",
+      "Bash(uv --version)",
+      "Bash(uv sync *)",
+      "Bash(npm test *)",
+      "Bash(npm run *)",
+      "Bash(uv run *)",
+      "Bash(curl -s http://127.0.0.1:8001/api/health)",
+      "Bash(curl -s http://127.0.0.1:8001/api/catalog)",
+      "Bash(Get-Content *)",
+      "Bash(git merge *)",
+      "Bash(del components\\\\NdaForm.tsx components\\\\NdaPreview.tsx types\\\\nda.ts __tests__\\\\NdaForm.test.tsx __tests__\\\\NdaPreview.test.tsx __tests__\\\\ndaTypes.test.ts __tests__\\\\integration.test.tsx)"
     ]
   }
 }

@@ -36,6 +36,12 @@ export default function DashboardPage() {
           Prelegal
         </span>
         <div className="flex items-center gap-4">
+          <a
+            href="/create/"
+            className="text-sm text-brand-yellow font-medium hover:text-white transition-colors"
+          >
+            + New document
+          </a>
           {user && (
             <span className="text-white/60 text-sm hidden sm:block">
               {user.username}
