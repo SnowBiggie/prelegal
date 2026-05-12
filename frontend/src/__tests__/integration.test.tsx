@@ -1,6 +1,6 @@
 import React from "react";
 import { render, screen, fireEvent, within } from "@testing-library/react";
-import Home from "@/app/page";
+import Home from "@/app/nda/page";
 
 beforeEach(() => {
   window.print = jest.fn();

@@ -19,6 +19,9 @@ wheels/
 share/python-wheels/
 MANIFEST
 
+# Allow frontend source lib directory (lib/ above is for Python build artifacts)
+!frontend/src/lib/
+
 # Virtual environments
 .venv/
 venv/
