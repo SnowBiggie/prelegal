@@ -1,4 +1,5 @@
 import type { CatalogTemplate } from "@/types/catalog";
+import { deriveSlug } from "@/lib/api";
 
 interface Props {
   template: CatalogTemplate;
@@ -8,6 +9,11 @@ const ACCENTS = ["border-brand-blue", "border-brand-purple", "border-brand-yello
 
 function accentFor(name: string): string {
   return ACCENTS[name.charCodeAt(0) % ACCENTS.length];
+}
+
+function hrefFor(filename: string): string {
+  const slug = deriveSlug(filename);
+  return slug === "mutual-nda" ? "/nda/" : `/document/${slug}/`;
 }
 
 export default function DocumentCard({ template }: Props) {
@@ -22,14 +28,12 @@ export default function DocumentCard({ template }: Props) {
       <p className="text-xs text-brand-gray leading-relaxed flex-1">
         {template.description}
       </p>
-      <button
-        className="mt-auto self-start text-xs font-medium text-brand-blue
-                   hover:underline focus:outline-none disabled:opacity-40 disabled:cursor-not-allowed"
-        disabled
-        title="Coming in a future release"
+      <a
+        href={hrefFor(template.filename)}
+        className="mt-auto self-start text-xs font-medium text-brand-blue hover:underline"
       >
         Draft document →
-      </button>
+      </a>
     </div>
   );
 }

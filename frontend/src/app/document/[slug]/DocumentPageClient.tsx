@@ -6,10 +6,19 @@ import { fetchTemplate, postDocumentChat } from "@/lib/api";
 import ChatPanel from "@/components/ChatPanel";
 import DocumentPreview from "@/components/DocumentPreview";
 import type { ChatMessage, TemplateResponse } from "@/types/document";
+import catalogData from "../../../../../catalog.json";
 
-const SLUG = "mutual-nda";
+interface Props {
+  slug: string;
+}
 
-export default function NdaPage() {
+export default function DocumentPageClient({ slug }: Props) {
+  const documentName =
+    catalogData.templates.find(
+      (t) =>
+        t.filename.replace("templates/", "").replace(".md", "").toLowerCase() === slug
+    )?.name ?? slug;
+
   const [template, setTemplate] = useState<TemplateResponse | null>(null);
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [fields, setFields] = useState<Record<string, string>>({});
@@ -22,7 +31,7 @@ export default function NdaPage() {
       window.location.replace("/login/");
       return;
     }
-    fetchTemplate(SLUG)
+    fetchTemplate(slug)
       .then((data) => {
         setTemplate(data);
         const empty: Record<string, string> = {};
@@ -33,28 +42,27 @@ export default function NdaPage() {
         setMessages([
           {
             role: "assistant",
-            content:
-              "I'll help you draft your Mutual NDA. Let's start with the basics — what's the purpose of this agreement?",
+            content: `I'll help you draft your ${data.name}. What would you like to start with?`,
           },
         ]);
       })
       .catch(() => setError("Could not load template."))
       .finally(() => setLoading(false));
-  }, []);
+  }, [slug]);
 
   async function handleSend(text: string) {
     const newMessages: ChatMessage[] = [...messages, { role: "user", content: text }];
     setMessages(newMessages);
     setChatLoading(true);
     try {
-      const res = await postDocumentChat(SLUG, {
+      const res = await postDocumentChat(slug, {
         history: messages,
         message: text,
         fields,
       });
       setMessages((prev) => [...prev, { role: "assistant", content: res.reply }]);
       setFields(res.fields);
-      if (res.redirect_slug && res.redirect_slug !== SLUG) {
+      if (res.redirect_slug && res.redirect_slug !== slug) {
         window.location.href = `/document/${res.redirect_slug}/`;
       }
     } catch {
@@ -82,7 +90,7 @@ export default function NdaPage() {
             Prelegal
           </a>
           <span className="text-white/40">/</span>
-          <span className="text-white/80 text-sm font-medium">Mutual NDA Creator</span>
+          <span className="text-white/80 text-sm font-medium">{documentName}</span>
         </div>
         <div className="flex items-center gap-4">
           {user && (
@@ -123,7 +131,7 @@ export default function NdaPage() {
               <DocumentPreview
                 templateContent={template.template_content}
                 fields={fields}
-                documentName={template.name}
+                documentName={documentName}
               />
             )}
           </main>
