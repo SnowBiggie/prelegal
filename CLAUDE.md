@@ -65,9 +65,15 @@ Backend available at http://localhost:8000
   - `/dashboard` — lists all 12 document types from the catalog
   - `/nda` — Mutual NDA creator (PL-3, AI-assisted PDF generation)
 
+### Done (AI Chat — PL-5, PL-6)
+- **`/nda/`** — rewritten to use freeform AI chat UI; replaces old form-based NDA creator (PL-5)
+- **`/document/[slug]/`** — AI chat + live document preview for all 12 document types (PL-6)
+- **`/create/`** — landing chatbot that identifies the right document type and routes to it
+- **Backend**: `GET /api/document/{slug}/template`, `POST /api/document/{slug}/chat`, `POST /api/create/chat`
+- **Components**: `ChatPanel`, `DocumentPreview` (field substitution, progress counter, PDF download)
+- **AI**: LiteLLM/Cerebras structured outputs (`DocumentChatAIResult`, `CreateChatAIResult`)
+
 ### Not yet implemented
 - Backend auth API (sign up / sign in endpoints, JWT/session)
-- AI chat interface for document drafting (beyond the NDA page)
 - Document persistence (saving drafted documents per user)
-- Per-document pages for the other 11 template types
 
