@@ -16,10 +16,13 @@ function PartySection({
   party: PartyDetails;
   onChange: (p: PartyDetails) => void;
 }) {
+  const idPrefix = label.toLowerCase().replace(/\s+/g, ""); // "party1" | "party2"
+
   const field = (name: keyof PartyDetails, display: string, placeholder?: string) => (
     <div>
-      <label className="block text-xs font-medium text-gray-600 mb-1">{display}</label>
+      <label htmlFor={`${idPrefix}-${name}`} className="block text-xs font-medium text-gray-600 mb-1">{display}</label>
       <input
+        id={`${idPrefix}-${name}`}
         type="text"
         value={party[name]}
         placeholder={placeholder}
@@ -36,8 +39,9 @@ function PartySection({
       {field("title", "Title", "CEO")}
       {field("company", "Company", "Acme Inc.")}
       <div>
-        <label className="block text-xs font-medium text-gray-600 mb-1">Notice Address</label>
+        <label htmlFor={`${idPrefix}-noticeAddress`} className="block text-xs font-medium text-gray-600 mb-1">Notice Address</label>
         <textarea
+          id={`${idPrefix}-noticeAddress`}
           value={party.noticeAddress}
           placeholder="jane@acme.com or 123 Main St, City, ST 00000"
           onChange={(e) => onChange({ ...party, noticeAddress: e.target.value })}
@@ -57,10 +61,11 @@ export default function NdaForm({ data, onChange }: Props) {
     <div className="space-y-5 text-sm">
       {/* Purpose */}
       <div>
-        <label className="block text-xs font-medium text-gray-600 mb-1">
+        <label htmlFor="purpose" className="block text-xs font-medium text-gray-600 mb-1">
           Purpose <span className="text-gray-400">(how confidential information may be used)</span>
         </label>
         <textarea
+          id="purpose"
           value={data.purpose}
           onChange={(e) => set("purpose", e.target.value)}
           rows={3}
@@ -70,8 +75,9 @@ export default function NdaForm({ data, onChange }: Props) {
 
       {/* Effective Date */}
       <div>
-        <label className="block text-xs font-medium text-gray-600 mb-1">Effective Date</label>
+        <label htmlFor="effectiveDate" className="block text-xs font-medium text-gray-600 mb-1">Effective Date</label>
         <input
+          id="effectiveDate"
           type="date"
           value={data.effectiveDate}
           onChange={(e) => set("effectiveDate", e.target.value)}
@@ -85,6 +91,7 @@ export default function NdaForm({ data, onChange }: Props) {
         <label className="flex items-center gap-2">
           <input
             type="radio"
+            name="mndaTermType"
             checked={data.mndaTermType === "expires"}
             onChange={() => set("mndaTermType", "expires")}
           />
@@ -102,6 +109,7 @@ export default function NdaForm({ data, onChange }: Props) {
         <label className="flex items-center gap-2">
           <input
             type="radio"
+            name="mndaTermType"
             checked={data.mndaTermType === "until_terminated"}
             onChange={() => set("mndaTermType", "until_terminated")}
           />
@@ -115,6 +123,7 @@ export default function NdaForm({ data, onChange }: Props) {
         <label className="flex items-center gap-2">
           <input
             type="radio"
+            name="confidentialityTermType"
             checked={data.confidentialityTermType === "years"}
             onChange={() => set("confidentialityTermType", "years")}
           />
@@ -131,6 +140,7 @@ export default function NdaForm({ data, onChange }: Props) {
         <label className="flex items-center gap-2">
           <input
             type="radio"
+            name="confidentialityTermType"
             checked={data.confidentialityTermType === "perpetual"}
             onChange={() => set("confidentialityTermType", "perpetual")}
           />
@@ -140,8 +150,9 @@ export default function NdaForm({ data, onChange }: Props) {
 
       {/* Governing Law */}
       <div>
-        <label className="block text-xs font-medium text-gray-600 mb-1">Governing Law (State)</label>
+        <label htmlFor="governingLaw" className="block text-xs font-medium text-gray-600 mb-1">Governing Law (State)</label>
         <input
+          id="governingLaw"
           type="text"
           value={data.governingLaw}
           placeholder="e.g. Delaware"
@@ -152,8 +163,9 @@ export default function NdaForm({ data, onChange }: Props) {
 
       {/* Jurisdiction */}
       <div>
-        <label className="block text-xs font-medium text-gray-600 mb-1">Jurisdiction</label>
+        <label htmlFor="jurisdiction" className="block text-xs font-medium text-gray-600 mb-1">Jurisdiction</label>
         <input
+          id="jurisdiction"
           type="text"
           value={data.jurisdiction}
           placeholder="e.g. courts located in New Castle, DE"
@@ -164,10 +176,11 @@ export default function NdaForm({ data, onChange }: Props) {
 
       {/* Modifications */}
       <div>
-        <label className="block text-xs font-medium text-gray-600 mb-1">
+        <label htmlFor="modifications" className="block text-xs font-medium text-gray-600 mb-1">
           MNDA Modifications <span className="text-gray-400">(optional)</span>
         </label>
         <textarea
+          id="modifications"
           value={data.modifications}
           placeholder="List any modifications to the standard terms, or leave blank"
           onChange={(e) => set("modifications", e.target.value)}

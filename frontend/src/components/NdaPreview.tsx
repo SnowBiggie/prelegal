@@ -47,7 +47,7 @@ export default function NdaPreview({ data }: Props) {
     : "";
 
   return (
-    <div className="flex flex-col h-full">
+    <div className="flex flex-col h-full print:h-auto print:block">
       {/* Toolbar */}
       <div className="flex items-center justify-between mb-4 print:hidden">
         <h2 className="text-base font-semibold text-gray-700">Document Preview</h2>
@@ -65,7 +65,7 @@ export default function NdaPreview({ data }: Props) {
       {/* Document */}
       <div
         id="nda-document"
-        className="flex-1 overflow-y-auto bg-white border border-gray-200 rounded-lg shadow-sm px-10 py-10 text-sm leading-relaxed text-gray-800 print:border-0 print:shadow-none print:px-0 print:py-0 print:overflow-visible"
+        className="flex-1 overflow-y-auto bg-white border border-gray-200 rounded-lg shadow-sm px-10 py-10 text-sm leading-relaxed text-gray-800 print:flex-none print:h-auto print:border-0 print:shadow-none print:px-0 print:py-0 print:overflow-visible"
       >
         <h1 className="text-2xl font-bold text-center mb-1">Mutual Non-Disclosure Agreement</h1>
         <p className="text-center text-gray-500 text-xs mb-8">
