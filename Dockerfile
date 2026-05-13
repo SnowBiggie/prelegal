@@ -5,6 +5,7 @@ WORKDIR /build/frontend
 COPY frontend/package.json frontend/package-lock.json ./
 RUN npm ci --prefer-offline
 COPY frontend/ ./
+COPY catalog.json /build/catalog.json
 RUN npm run build
 
 # Stage 2: Python backend
