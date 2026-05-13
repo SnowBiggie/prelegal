@@ -2,8 +2,11 @@ import os
 from pathlib import Path
 from typing import TypeVar, Type
 
+import litellm
 from litellm import completion
 from pydantic import BaseModel
+
+litellm.drop_params = True
 
 try:
     from dotenv import load_dotenv
